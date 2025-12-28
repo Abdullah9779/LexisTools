@@ -142,8 +142,9 @@ Lexis_Tools/
 └── requirements.txt        # Project dependencies
 ```
 
-
 ## 📄 License
 
-Distributed under the Apache License 2.0.
+Distributed under the Apache License 2.0.  
+See the [LICENSE](https://github.com/Abdullah9779/LexisTools/blob/main/LICENSE) file for details.
+
 
