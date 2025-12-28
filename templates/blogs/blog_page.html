@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+<!-- Primary Meta Tags -->
+<title>Blog - Lexis Tools</title>
+<meta name="description" content="Read tutorials, updates, and tips on AI-powered translation and text summarization with Lexis Tools." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Blog - Lexis Tools" />
+<meta property="og:description" content="Explore articles, tutorials, and updates on AI translation and text summarization with Lexis Tools." />
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+<meta property="og:site_name" content="Lexis Tools" />
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-1200x630.png' %}" />
+<meta property="og:image:alt" content="Lexis Tools Blog" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Blog - Lexis Tools" />
+<meta name="twitter:description" content="Explore articles, tutorials, and updates on AI translation and text summarization." />
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-1200x630.png' %}" />
+<meta name="twitter:image:alt" content="Lexis Tools Blog" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Lexis Tools Blog",
+  "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+  "description": "Read tutorials, updates, and tips on AI-powered translation and text summarization with Lexis Tools.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lexis Tools",
+    "url": "{{ request.scheme }}://{{ request.get_host }}/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'favicons/android-chrome-512.png' %}"
+    }
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+
+{% block body_class %}bg-white{% endblock %}
+
+{% block body %}
+<main class="pt-20">
+    <!-- Blog Hero -->
+    <section class="py-20 md:py-28 text-center bg-slate-50 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal">
+                <h1 class="text-4xl md:text-6xl font-serif font-bold text-slate-900">From the Blog</h1>
+                <p class="mt-4 md:mt-6 max-w-2xl mx-auto text-lg text-slate-500">
+                    Discover insights on translation, AI, and the future of language from our team of experts.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Blog Post 1 -->
+                {% if blogs %}
+                    {% for blog in blogs %}
+                        <article class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden reveal delay-100 group flex flex-col">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <div class="flex-shrink-0 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-brand-50 flex items-center justify-center text-brand-600">
+                                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="flex-grow">
+                                    <h2 class="text-xl font-bold font-serif text-slate-900 mb-3">
+                                        {{ blog.title }}
+                                    </h2>
+                                    <p class="text-slate-500 leading-relaxed mb-4">
+                                        {{ blog.subtitle }}
+                                    </p>
+                                    <p class="text-xs text-slate-400 mb-4">{{ blog.date_time }} &bull; {{ blog.read_time }} min read</p>
+                                </div>
+                                <div class="mt-auto">
+                                    <a href="/blog/{{ blog.slug }}/"
+                                        class="inline-flex items-center gap-2 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors">
+                                        Read Article
+                                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                {% else %}
+                    <p>No blogs found.</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

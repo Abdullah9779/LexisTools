@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+<title>Email Verification - Lexis Tools</title>
+<meta name="description" content="Verify your email address to activate your Lexis Tools account.">
+<link rel="stylesheet" href="{% static '/css/sign-in-page.css' %}">
+{% endblock %}
+
+{% block body_class %}bg-white text-slate-600 flex flex-col min-h-screen{% endblock %}
+
+{% block body %}
+<main class="flex-grow flex items-center justify-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl z-0 pointer-events-none">
+        <div
+            class="absolute top-20 left-10 w-72 h-72 bg-brand-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob">
+        </div>
+        <div
+            class="absolute top-20 right-10 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000">
+        </div>
+    </div>
+
+    <div
+        class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-100 p-8 sm:p-10 relative z-10 reveal">
+        <div class="text-center space-y-6">
+            {% if status == "Success" %}
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                <svg class="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-serif font-bold text-slate-900">Email Verified!</h1>
+            <p class="text-slate-600">{{ message }}</p>
+            <a href="/sign-in/"
+                class="inline-block w-full py-3 px-4 bg-slate-900 text-white font-medium rounded-full hover:bg-slate-700 transition-all shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 hover:-translate-y-0.5">
+                Sign In to Your Account
+            </a>
+
+            {% elif status == "Already Verified" %}
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+                <svg class="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-serif font-bold text-slate-900">Already Verified</h1>
+            <p class="text-slate-600">{{ message }}</p>
+            <a href="/sign-in/"
+                class="inline-block w-full py-3 px-4 bg-slate-900 text-white font-medium rounded-full hover:bg-slate-700 transition-all shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 hover:-translate-y-0.5">
+                Sign In to Your Account
+            </a>
+
+            {% elif status == "Expired" %}
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto">
+                <svg class="w-8 h-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-serif font-bold text-slate-900">Link Expired</h1>
+            <p class="text-slate-600">{{ message }}</p>
+            <a href="/sign-up/"
+                class="inline-block w-full py-3 px-4 bg-slate-900 text-white font-medium rounded-full hover:bg-slate-700 transition-all shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 hover:-translate-y-0.5">
+                Request New Link
+            </a>
+
+            {% else %}
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                <svg class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
+            <h1 class="text-3xl font-serif font-bold text-slate-900">Verification Failed</h1>
+            <p class="text-slate-600">{{ message }}</p>
+            <a href="/sign-up/"
+                class="inline-block w-full py-3 px-4 bg-slate-900 text-white font-medium rounded-full hover:bg-slate-700 transition-all shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 hover:-translate-y-0.5">
+                Back to Sign Up
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</main>
+{% endblock %}

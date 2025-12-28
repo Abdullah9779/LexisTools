@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+<!-- Primary Meta Tags -->
+<title>Text Summarizer Tool - Lexis Tools</title>
+<meta name="description" content="Use Lexis Tools' AI-powered text summarizer to condense articles, documents, and text in multiple languages. Fast, accurate, and free with your own LLM API key." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Text Summarizer Tool - Lexis Tools" />
+<meta property="og:description" content="Summarize text quickly and accurately using Lexis Tools' AI text summarizer with your own LLM API key." />
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+<meta property="og:site_name" content="Lexis Tools" />
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-1200x630.png' %}" />
+<meta property="og:image:alt" content="Lexis Tools Text Summarizer Tool interface" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Text Summarizer Tool - Lexis Tools" />
+<meta name="twitter:description" content="Use Lexis Tools' AI text summarizer to condense articles and documents efficiently." />
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-1200x630.png' %}" />
+<meta name="twitter:image:alt" content="Lexis Tools Text Summarizer Tool interface" />
+
+<link rel="stylesheet" href="{% static '/css/text-summarizer.css' %}">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Lexis Tools Text Summarizer",
+  "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+  "description": "AI-powered text summarization tool. Condense articles, documents, and text efficiently using your own LLM API key.",
+  "applicationCategory": "Utility",
+  "operatingSystem": "All",
+  "isAccessibleForFree": true,
+  "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'favicons/android-chrome-512.png' %}",
+  "creator": {
+    "@type": "Organization",
+    "name": "Lexis Tools",
+    "url": "{{ request.scheme }}://{{ request.get_host }}/"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Text Summarizer Tool",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+{% block body_class %}bg-slate-50 text-slate-600 flex flex-col min-h-screen{% endblock %}
+
+{% block nav_links %}
+{% endblock %}
+
+{% block body %}
+<main class="flex-grow pt-28 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl z-0 pointer-events-none">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+        <div class="absolute top-20 right-10 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto relative z-10 reveal">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-serif font-bold text-slate-900">Text Summarizer</h1>
+            <p class="mt-2 text-slate-500">Condense long articles and documents into concise summaries.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-visible">
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                <div class="flex flex-col h-full">
+                    <div class="relative flex-grow">
+                        <button id="clearTextBtn" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100" title="Clear Text">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <textarea id="sourceText" class="w-full h-full p-6 pr-16 resize-none focus:outline-none text-lg text-slate-800 bg-transparent placeholder-slate-300 min-h-[400px]" placeholder="Enter or paste your text here..."></textarea>
+                    </div>
+                    <div class="px-4 py-2 bg-white border-t border-slate-100 flex justify-between items-center gap-2">
+                        <span id="charCount" class="text-xs text-slate-500">0 characters</span>
+                        <div class="flex items-center gap-2">
+                            <button id="pasteBtn" class="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100" title="Paste">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                            </button>
+                            <button id="copySourceBtn" class="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100" title="Copy">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col h-full bg-slate-50/30">
+                    <div class="flex-grow relative min-h-[400px]">
+                        <div id="summaryText" class="w-full h-full p-6 text-lg text-slate-800">
+                            <span class="text-slate-400">Summary will appear here...</span>
+                        </div>
+                    </div>
+                    <div class="px-4 py-2 bg-slate-50/30 border-t border-slate-200/30 flex justify-end items-center gap-2">
+                        <button id="copySummaryBtn" class="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100" title="Copy">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-slate-100 flex justify-between items-center bg-white">
+                <div class="flex items-center gap-4">
+                    <label class="flex items-center gap-2 text-sm text-slate-600">
+                        <span>Summary Length:</span>
+                        <select id="summaryLength" class="px-3 py-1.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 bg-white">
+                            <option value="short">Short</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="long">Long</option>
+                        </select>
+                    </label>
+                </div>
+                <button id="summarizeBtn" class="px-6 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-700 transition-all shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 hover:-translate-y-0.5 flex items-center gap-2">
+                    <span>Summarize</span>
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<template id="tick-icon">
+    <svg class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+</template>
+<template id="loader-icon">
+    <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+</template>
+
+<script src="{% static "/js/text-summarizer-page.js" %}"></script>
+{% endblock %}

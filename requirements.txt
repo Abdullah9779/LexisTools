@@ -1,0 +1,11 @@
+django
+djangorestframework
+langchain
+langchain-google-genai
+langchain-openai
+langchain-groq
+elevenlabs
+python-dotenv
+itsdangerous
+mysqlclient
+python-dotenv

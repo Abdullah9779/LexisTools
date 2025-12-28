@@ -1,0 +1,16 @@
+[
+    {
+        "slug": "how-to-get-google-gemini-api",
+        "title": "Get Google Gemini API & Configure in Lexis Dashboard",
+        "subtitle": "Learn how to obtain your Google Gemini API key and seamlessly integrate it into your Lexis dashboard for enhanced translation and voice capabilities.",
+        "read_time": 8,
+        "date_time": "Dec 15, 2025"
+    },
+    {
+        "slug": "how-to-get-groq-api",
+        "title": "Get Groq Cloud API & Configure in Lexis Dashboard",
+        "subtitle": "Learn how to obtain your Groq Cloud API key and integrate it into your Lexis dashboard for lightning-fast AI processing and translation capabilities.",
+        "read_time": 8,
+        "date_time": "Dec 15, 2025"
+    }
+]

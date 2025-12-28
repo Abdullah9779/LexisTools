@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+<!-- Primary Meta Tags -->
+<title>Terms of Service - Lexis Tools</title>
+<meta name="description" content="Read the Terms of Service of Lexis Tools to understand the rules, obligations, and usage policies for our translation and summarization tools." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Terms of Service - Lexis Tools" />
+<meta property="og:description" content="Understand the rules, obligations, and usage policies of Lexis Tools by reading our Terms of Service." />
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+<meta property="og:site_name" content="Lexis Tools" />
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-1200x630.png' %}" />
+<meta property="og:image:alt" content="Lexis Tools Terms of Service" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Terms of Service - Lexis Tools" />
+<meta name="twitter:description" content="Understand the rules, obligations, and usage policies of Lexis Tools." />
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-1200x630.png' %}" />
+<meta name="twitter:image:alt" content="Lexis Tools Terms of Service" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Terms of Service",
+  "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+  "description": "Read the Terms of Service of Lexis Tools to understand the rules, obligations, and usage policies for our translation and summarization tools.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Terms of Service",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+
+{% block body %}
+<section class="pt-32 pb-20 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-4">Terms of Service</h1>
+            <p class="text-slate-500">Last updated: {% now "F d, Y" %}</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-12 space-y-8">
+            
+            <div class="prose prose-slate max-w-none">
+                <p class="text-slate-600 leading-relaxed mb-8">
+                    Welcome to Lexis Tools! By accessing or using our Platform, you agree to comply with and be bound by the following terms and conditions. Please read them carefully.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4">1. Use of the Platform</h2>
+                
+                <h3 class="text-lg font-semibold text-slate-900 mb-2 mt-6">1.1 Account Registration</h3>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    To use our tools (Translation and Text Summarizer), you must create an account and provide accurate and complete information, including your first name, last name, username, email, and password.
+                </p>
+
+                <h3 class="text-lg font-semibold text-slate-900 mb-2 mt-6">1.2 API Key Usage</h3>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    You may provide your own API keys to access the Translation and Text Summarizer tools. You are responsible for the proper and secure use of your API keys.
+                </p>
+
+                <h3 class="text-lg font-semibold text-slate-900 mb-2 mt-6">1.3 User Responsibilities</h3>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    You agree not to use the Platform for any unlawful, abusive, or harmful activities, including but not limited to brute-force attacks or any actions that may compromise the security of the Platform.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">2. Prohibited Conduct</h2>
+                <p class="text-slate-600 leading-relaxed mb-4">You agree not to:</p>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>Engage in any activity that disrupts or interferes with the Platform.</li>
+                    <li>Don’t do anything that could harm the website, like sending viruses or dangerous files.</li>
+                    <li>Attempt unauthorized access to the Platform or its related systems.</li>
+                </ul>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">3. Termination</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    We reserve the right to suspend or terminate your account if you violate these Terms and Conditions.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">4. Limitation of Liability</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    We are not liable for any indirect, incidental, or consequential damages arising from your use of the Platform.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">5. Changes to Terms</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    We may update these Terms and Conditions occasionally. We will notify you of any significant changes.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">6. Contact Us</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    If you have any questions about these Terms, please contact us at: <a href="mailto:support@lexistools.com" class="text-brand-600 hover:underline">support@lexistools.com</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32.png' %}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{% static 'favicons/favicon-48.png' %}">
+
+    <link rel="shortcut icon" href="{% static 'favicons/favicon.ico' %}" type="image/x-icon">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicons/apple-touch-icon.png' %}">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicons/android-chrome-192.png' %}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{% static 'favicons/android-chrome-512.png' %}">
+
+    <link rel="manifest" href="/manifest.json">
+
+    {% block seo %}
+    <title>Lexis Tools</title>
+    <meta name="description"
+        content="Lexis Tools is an platform where you can use our tools using you own api.">
+    {% endblock %}
+
+    {% block structured_data %}
+    {% endblock %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            600: '#0284c7', // Primary Blue
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(2, 132, 199, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    {% block css %}
+    <style>
+        /* Base Adjustments */
+        body {
+            font-feature-settings: "cv11", "ss01";
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Fade In Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered delays */
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .delay-300 {
+            transition-delay: 300ms;
+        }
+
+        /* Custom underline hover effect */
+        .hover-underline {
+            background-image: linear-gradient(#0284c7, #0284c7);
+            background-size: 0% 2px;
+            background-repeat: no-repeat;
+            background-position: left bottom;
+            transition: background-size 300ms ease;
+        }
+
+        .hover-underline:hover {
+            background-size: 100% 2px;
+        }
+    </style>
+    {% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+    <!-- Header -->
+    <header class="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b border-slate-100 transition-all duration-300"
+        id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="/dashboard/" class="flex items-center gap-2">
+                        <img src="{% static 'logos/logo.svg' %}" alt="Lexis Tools Logo" class="h-8 w-auto">
+                        <span class="font-serif text-2xl font-bold text-slate-900 tracking-tight">Lexis Tools</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    {% block nav_links %}
+                    <a href="/#features"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors hover-underline">Features</a>
+                    <a href="/#process"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors hover-underline">How It Works</a>
+                    <a href="/#pricing"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors hover-underline">Why Choose</a>
+                    <a href="/blog/"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors hover-underline">Blog</a>
+                    <a href="/about/"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors hover-underline">About Us</a>
+                    {% endblock %}
+                </nav>
+
+                <!-- Header Actions -->
+                <div class="hidden md:flex items-center space-x-4">
+                    {% block header_actions %}
+                    {% if user.is_authenticated %}
+                    <div class="relative" id="dashboard-dropdown">
+                        <button id="dashboard-btn"
+                            class="flex items-center gap-3 text-left rounded-full p-1 pr-2 hover:bg-slate-100 transition-colors">
+                            <div class="flex-shrink-0">
+                                <span class="inline-flex items-center justify-center h-9 w-9 rounded-full bg-slate-700">
+                                    <span class="text-sm font-medium leading-none text-white">
+                                        {{ user.username|first|upper }}</span>
+                                </span>
+                            </div>
+                            <div class="hidden md:block">
+                                <div class="text-sm font-medium text-slate-800">
+                                    {{ user.get_full_name|default:user.username }}</div>
+                                <div class="text-xs text-slate-500">@{{ user.username }}</div>
+                            </div>
+                            <svg class="hidden md:block w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="dashboard-menu"
+                            class="hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-1 z-50 border border-slate-100">
+                            <a href="/dashboard/#home"
+                                class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Dashboard Home</a>
+                            <a href="/dashboard/#profile"
+                                class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Your Profile</a>
+                            <a href="/dashboard/#settings"
+                                class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Settings</a>
+                            <a href="/dashboard/#blog"
+                                class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">Blog</a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="/sign-in/"
+                        class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">Sign In</a>
+                    <a href="/sign-up/"
+                        class="px-6 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-full hover:bg-slate-700 transition-all shadow-lg shadow-slate-900/20 hover:shadow-slate-900/40 hover:-translate-y-0.5">Get
+                        Started</a>
+                    {% endif %}
+                    {% endblock %}
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-slate-900 focus:outline-none p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full left-0 shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                {% block mobile_nav_links %}
+                <a href="/#features"
+                    class="block px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Features</a>
+                <a href="/#process"
+                    class="block px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">How It Works</a>
+                <a href="/#pricing"
+                    class="block px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Why Choose</a>
+                <div class="pt-4 mt-4 border-t border-slate-100">
+                    {% if user.is_authenticated %}
+                    <a href="/dashboard/#home"
+                        class="block px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Dashboard
+                        Home</a>
+                    <a href="/dashboard/#profile"
+                        class="block px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Your
+                        Profile</a>
+                    <a href="/dashboard/#settings"
+                        class="block px-3 py-3 text-base font-medium text-brand-600 font-bold">Settings</a>
+                    {% else %}
+                    <a href="/sign-in/"
+                        class="block px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50 rounded-md">Sign
+                        In</a>
+                    <a href="/sign-up/" class="block px-3 py-3 text-base font-medium text-brand-600 font-bold">Get
+                        Started</a>
+                    {% endif %}
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </header>
+
+    {% block body %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-2 md:col-span-1">
+                    <a href="/dashboard/" class="flex items-center gap-2 mb-4">
+                        <img src="{% static 'logos/logo.svg' %}" alt="Lexis Tools Logo" class="h-6 w-auto">
+                        <span class="font-serif text-xl font-bold text-slate-900">Lexis Tools</span>
+                    </a>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        Breaking language barriers with AI powered precision and human expertise.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="/about/" class="hover:text-brand-600 transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="hover:text-brand-600 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4">Tools</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="/translate/" class="hover:text-brand-600 transition-colors">Translation</a></li>
+                        <li><a href="/text-summarizer/" class="hover:text-brand-600 transition-colors">Text Summarizer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="/privacy-policy/" class="hover:text-brand-600 transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service/" class="hover:text-brand-600 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-slate-400">&copy; {% now "Y" %} Lexis Tools. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <!-- Social icons could go here -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static "/js/base.js" %} "></script>
+    <script>
+        const csrftoken = '{{ csrf_token }}';
+    </script>
+    {% block javascript %}
+    {% endblock %}
+</body>
+
+</html>

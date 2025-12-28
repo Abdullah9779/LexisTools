@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+<!-- Primary Meta Tags -->
+<title>Privacy Policy - Lexis Tools</title>
+<meta name="description" content="Read the Privacy Policy of Lexis Tools to learn how we handle your data and maintain privacy while using our translation and summarization tools." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Privacy Policy - Lexis Tools" />
+<meta property="og:description" content="Learn how Lexis Tools handles user data and protects privacy while using our AI translation and summarization tools." />
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+<meta property="og:site_name" content="Lexis Tools" />
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-1200x630.png' %}" />
+<meta property="og:image:alt" content="Lexis Tools Privacy Policy" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Privacy Policy - Lexis Tools" />
+<meta name="twitter:description" content="Learn how Lexis Tools handles user data and maintains privacy." />
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-1200x630.png' %}" />
+<meta name="twitter:image:alt" content="Lexis Tools Privacy Policy" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Privacy Policy",
+  "url": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+  "description": "Read the Privacy Policy of Lexis Tools to learn how we handle your data and maintain privacy while using our translation and summarization tools.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ request.scheme }}://{{ request.get_host }}/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Privacy Policy",
+        "item": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+
+{% block body %}
+<section class="pt-32 pb-20 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-4">Privacy Policy</h1>
+            <p class="text-slate-500">Last updated: {% now "F d, Y" %}</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-12 space-y-8">
+            
+            <div class="prose prose-slate max-w-none">
+                <p class="text-slate-600 leading-relaxed mb-8">
+                    This Privacy Policy explains how we collect, use, and protect your information when you use our website.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4">1. Information We Collect</h2>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    We collect the following information when you create an account or use our services:
+                </p>
+
+                <h3 class="text-lg font-semibold text-slate-900 mb-2 mt-6">1.1 Account Information</h3>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>First Name</li>
+                    <li>Last Name</li>
+                    <li>Username</li>
+                    <li>Email Address</li>
+                    <li>Password (stored securely using hashing)</li>
+                </ul>
+
+                <h3 class="text-lg font-semibold text-slate-900 mb-2 mt-6">1.2 User Settings & Configurations</h3>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    After logging in, you may optionally provide additional data inside your account settings:
+                </p>
+                
+                <h4 class="text-md font-semibold text-slate-900 mb-2 mt-4">LLM Configuration:</h4>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>API Key (provided by the user)</li>
+                    <li>Model Name</li>
+                    <li>Provider Name</li>
+                    <li>Any custom LLM configuration fields you set</li>
+                </ul>
+
+                <h4 class="text-md font-semibold text-slate-900 mb-2 mt-4">Voice Configuration:</h4>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>Provider Name</li>
+                    <li>Model Name</li>
+                    <li>Voice Name</li>
+                    <li>API Key (optional, provided by the user)</li>
+                </ul>
+
+                <h4 class="text-md font-semibold text-slate-900 mb-2 mt-4">Prompts:</h4>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>Prompt Name</li>
+                    <li>Prompt Text</li>
+                </ul>
+
+                <p class="text-slate-600 leading-relaxed mt-4">
+                    You choose whether to provide these details. You may also revoke or delete your API keys from your provider at any time.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">2. How We Use Your Information</h2>
+                <p class="text-slate-600 leading-relaxed mb-4">We use your data only for the following purposes:</p>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>To create and manage your user account</li>
+                    <li>To authenticate your login</li>
+                    <li>To run LLM or Voice services using your own API keys</li>
+                    <li>To apply the configurations you set inside your dashboard</li>
+                    <li>To improve platform functionality and user experience</li>
+                </ul>
+                <p class="text-slate-600 leading-relaxed mt-4">
+                    We do not use your data for advertising, marketing, or tracking.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">3. No Third-Party Data Sharing</h2>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    We do not share, sell, or transfer your data to any third-party organizations.
+                </p>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    The only time your API key is used is when:
+                </p>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>You configure a provider, and</li>
+                    <li>The system sends requests directly to that provider using your key, under your permission.</li>
+                </ul>
+                <p class="text-slate-600 leading-relaxed mt-4">
+                    Your keys are never shown to any other user, and we do not access them manually.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">4. Data Security</h2>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    We take your security seriously. Your data is protected through:
+                </p>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>Encrypted HTTPS communication</li>
+                    <li>Secure password hashing</li>
+                    <li>Restricted internal access</li>
+                    <li>Safe storage practices</li>
+                </ul>
+                <p class="text-slate-600 leading-relaxed mt-4">
+                    You are responsible for keeping your API keys safe and rotating or revoking them from your provider if needed.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">5. User Control & Data Rights</h2>
+                <p class="text-slate-600 leading-relaxed mb-4">You can:</p>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>Update your profile information</li>
+                    <li>Change your API keys</li>
+                    <li>Modify your LLM/Voice settings</li>
+                </ul>
+                <p class="text-slate-600 leading-relaxed mt-4">
+                    If you delete your account, we permanently remove your stored data.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">6. Cookies & Tracking</h2>
+                <p class="text-slate-600 leading-relaxed mb-4">We only use essential cookies for:</p>
+                <ul class="list-disc list-inside text-slate-600 space-y-2 ml-4">
+                    <li>Login sessions</li>
+                    <li>Security</li>
+                </ul>
+                <p class="text-slate-600 leading-relaxed mt-4">
+                    We do not use tracking cookies, analytics trackers, or advertising cookies.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">7. Changes to This Privacy Policy</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    We may update this Privacy Policy as the platform evolves. If we make significant changes, we will notify users on the website.
+                </p>
+
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 mt-8">8. Contact Us</h2>
+                <p class="text-slate-600 leading-relaxed">
+                    If you have questions regarding this Privacy Policy, you can contact us at: <a href="mailto:support@lexistools.com" class="text-brand-600 hover:underline">support@lexistools.com</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

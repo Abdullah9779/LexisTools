@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+<title>How to Get Google Gemini API Key & Configure It in Lexis Dashboard | Lexis Blog</title>
+
+<meta name="description" content="Learn how to generate your Google Gemini API key and connect it with the Lexis dashboard for AI text, image, and voice features. Clear steps with screenshots and setup tips.">
+
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:title" content="How to Get Google Gemini API Key & Configure It in Lexis Dashboard">
+<meta property="og:description" content="Complete guide for generating your Gemini API key and adding it to Lexis dashboard LLM and voice settings.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.build_absolute_uri }}{% static 'images/og-1200x630.png' %}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Get Google Gemini API Key & Configure in Lexis Dashboard">
+<meta name="twitter:description" content="Easy tutorial for generating Gemini API keys and connecting them with Lexis Tools settings.">
+<meta name="twitter:image" content="{{ request.build_absolute_uri }}{% static 'images/og-1200x630.png' %}">
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ request.build_absolute_uri }}"
+  },
+  "headline": "How to Get Google Gemini API Key & Configure It in Lexis Dashboard",
+  "description": "Step-by-step tutorial showing how to create your Google Gemini API key and configure it in the Lexis dashboard for LLM and voice features.",
+  "image": "{{ request.build_absolute_uri }}{% static 'favicons/android-chrome-512.png' %}",
+  "author": {
+    "@type": "Person",
+    "name": "Lexis Tools",
+    "url": "{{ request.build_absolute_uri }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Lexis Tools",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ request.build_absolute_uri }}{% static 'images/og-1200x630.png' %}"
+    }
+  },
+  "datePublished": "2025-12-10",
+  "dateModified": "2025-12-10"
+}
+</script>
+
+
+{% endblock %}
+
+
+{% block body_class %}bg-white{% endblock %}
+
+
+
+{% block body %}
+<main class="pt-20">
+    <!-- Article Header -->
+    <section class="py-16 md:py-20 bg-slate-50 border-b border-slate-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="mb-6">
+                    <a href="/blog" class="inline-flex items-center gap-2 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Back to Blog
+                    </a>
+                </div>
+                <div class="mb-4">
+                    <span class="inline-block px-3 py-1 text-sm font-medium text-brand-600 bg-brand-50 rounded-full">Setup Guide</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-6">Complete Guide: Get Google Gemini API & Configure in Lexis Tools Dashboard</h1>
+                <p class="text-lg text-slate-500 mb-6 max-w-2xl mx-auto">
+                    Learn how to obtain your Google Gemini API key and seamlessly integrate it into your Lexis Tools dashboard for enhanced translation and voice capabilities.
+                </p>
+                <div class="flex items-center justify-center gap-4 text-sm text-slate-400">
+                    <span>Dec 15, 2025</span>
+                    <span>&bull;</span>
+                    <span>10 min read</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="py-16 md:py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-lg prose-slate max-w-none">
+                
+                <p class="lead text-xl text-slate-600 mb-8">
+                    Google Gemini API provides powerful AI capabilities for translation and voice synthesis. This comprehensive guide will show you exactly how to get your API key and configure it in your Lexis Tools dashboard settings.
+                </p>
+
+                <!-- Quick Links Section -->
+                <div class="bg-brand-50 p-6 rounded-2xl my-8">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4">Quick Links</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="https://aistudio.google.com" target="_blank" class="flex items-center gap-2 text-brand-600 hover:text-brand-700 transition-colors">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Google AI Studio
+                        </a>
+                        <a href="/dashboard/#settings" class="flex items-center gap-2 text-brand-600 hover:text-brand-700 transition-colors">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Lexis Tools Dashboard Settings
+                        </a>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-serif font-bold text-slate-900 mt-12 mb-6">Part 1: Getting Your Google Gemini API Key</h2>
+
+                <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Step 1: Access Google AI Studio</h3>
+                
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    First, navigate to <a href="https://aistudio.google.com" target="_blank" class="text-brand-600 hover:text-brand-700 underline">Google AI Studio</a> and sign in with your Google account.
+                </p>
+
+                <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Step 2: Navigate to API Keys</h3>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Once logged in, look for the "Get API Key" button or navigate to the API Keys section in the left sidebar.
+                </p>
+
+                <!-- API Keys Navigation Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-1.png" alt="API Keys Navigation" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">API Keys Section - Navigation Interface</p>
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Step 3: Create New API Key</h3>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    1. Click "Create API Key in new project" or select an existing project.
+                </p>
+
+                <!-- API Keys Navigation Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-2.png" alt="API Keys Navigation" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">API Keys Section - Manage API Interface</p>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    2. Give your api a meaningful name (e.g., "Lexis Tools api") and click on "Create Project" button or select existings project.
+                </p>
+
+                <!-- API Keys Navigation Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-3.png" alt="API Keys Navigation" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">Create New API Dilogbox.</p>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    3. Give your api a meaningful name (e.g., "Lexis Tools Project") and click on "Create Project" button.
+                </p>
+
+                <!-- API Keys Navigation Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-4.png" alt="API Keys Navigation" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">Create New Project Dilogbox.</p>
+                </div>
+
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    4. Now Click on "Create Key" button to create a new API key.
+                </p>
+
+                <!-- API Keys Navigation Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-5.png" alt="API Keys Navigation" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">API Keys Section - Manage API Interface</p>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    6. Now Click on "Copy" button to copy the API key to your clipboard.
+                </p>
+
+                <!-- API Keys Navigation Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-6.png" alt="API Keys Navigation" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">API Keys Section - Navigation Interface</p>
+                </div>
+
+                <div class="bg-red-50 border-l-4 border-red-500 p-6 my-8 rounded-r-lg">
+                    <p class="text-red-800">
+                        <strong>Security Warning:</strong> Never share your API key publicly or commit it to version control. Treat it like a password!
+                    </p>
+                </div>
+
+                <h2 class="text-2xl font-serif font-bold text-slate-900 mt-12 mb-6">Part 2: Adding API Key to Your Lexis Tools Dashboard Settings.</h2>
+
+                <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Step 1: Access Your Lexis Tools Dashboard Settings.</h3>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Log into your Lexis Tools account and navigate to your dashboard settings. You can access it directly using this link: 
+                    <a href="/dashboard/#settings" class="text-brand-600 hover:text-brand-700 underline font-medium">Lexis Tools Dashboard</a>
+                </p>
+
+                <!-- Lexis Dashboard Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-7.png" alt="Lexis Tools Dashboard Homepage" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">Lexis Tools Dashboard Settings</p>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    In the Settings page, you'll find two main configuration sections:
+                </p>
+
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 my-8 rounded-r-lg">
+                    <h4 class="font-bold text-blue-900 mb-2">LLM Configuration</h4>
+                    <p class="text-blue-800">
+                        Use this section to configure Google Gemini for text translation and generation tasks.
+                    </p>
+                </div>
+
+                <div class="bg-green-50 border-l-4 border-green-500 p-6 my-8 rounded-r-lg">
+                    <h4 class="font-bold text-green-900 mb-2">Voice Configuration</h4>
+                    <p class="text-green-800">
+                        Use this section to configure Google Gemini for text-to-speech and voice synthesis.
+                    </p>
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Step 2.1: Configure LLM Settings</h3>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Follow these steps to add your Google Gemini API key:
+                </p>
+
+                <div class="bg-slate-50 p-6 rounded-lg my-8">
+                    <h4 class="font-bold text-slate-900 mb-4">For LLM Configuration:</h4>
+                    <ol class="list-decimal pl-6 text-slate-600 space-y-2">
+                        <li>Select "Google" as your LLM Provider</li>
+                        <li>Choose your preferred model (e.g., "gemini-2.5-pro")</li>
+                        <li>Paste your API key in the "API Key" field</li>
+                        <li>Click "Save Configuration"</li>
+                    </ol>
+                </div>
+
+                <!-- LLM Configuration Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-8.png" alt="LLM Configuration Section" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">LLM Configuration Section - Settings Form</p>
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Step 2.2: Voice Configuration Settings</h3>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Follow these steps to add your Google Gemini API key:
+                </p>
+
+                <div class="bg-slate-50 p-6 rounded-lg my-8">
+                    <h4 class="font-bold text-slate-900 mb-4">For Voice Configuration:</h4>
+                    <ol class="list-decimal pl-6 text-slate-600 space-y-2">
+                        <li>Select "Google" as your TTS Provider</li>
+                        <li>Choose your preferred voice model</li>
+                        <li>Select a voice name from the dropdown</li>
+                        <li>Paste the same API key in the "API Key" field</li>
+                        <li>Click "Save Configuration"</li>
+                    </ol>
+                </div>
+
+                <!-- API Key Input Image -->
+                <div class="my-8">
+                    <img src="/media/blogs-images/google-gemini-api-guide/image-9.png" alt="API Key Input Fields" class="w-full rounded-lg shadow-lg border border-slate-200">
+                    <p class="text-center text-sm text-slate-500 mt-2">API Key Input Fields - Configuration Form</p>
+                </div>
+
+
+
+                <div class="bg-brand-50 p-8 rounded-2xl my-12">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Available Google Gemini Models</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">LLM Models:</h4>
+                            <ul class="text-slate-700 space-y-1 text-sm">
+                                <li>• gemini-3-pro-preview</li>
+                                <li>• gemini-2.5-pro</li>
+                                <li>• gemini-2.5-flash</li>
+                                <li>• gemini-2.0-flash</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">TTS Models:</h4>
+                            <ul class="text-slate-700 space-y-1 text-sm">
+                                <li>• gemini-2.5-flash-preview-tts</li>
+                                <li>• gemini-2.5-pro-preview-tts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-serif font-bold text-slate-900 mt-12 mb-6">Troubleshooting Common Issues</h2>
+
+                <div class="space-y-6">
+                    <div class="border-l-4 border-yellow-500 bg-yellow-50 p-6 rounded-r-lg">
+                        <h4 class="font-bold text-yellow-900 mb-2">API Key Not Working</h4>
+                        <p class="text-yellow-800 text-sm">
+                            Double-check that you copied the entire API key without any extra spaces. Ensure your Google Cloud project has billing enabled if required.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-yellow-500 bg-yellow-50 p-6 rounded-r-lg">
+                        <h4 class="font-bold text-yellow-900 mb-2">Model Not Available</h4>
+                        <p class="text-yellow-800 text-sm">
+                            Some models may not be available in all regions. Try using "gemini-2.5-flash" as it has the widest availability.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-yellow-500 bg-yellow-50 p-6 rounded-r-lg">
+                        <h4 class="font-bold text-yellow-900 mb-2">Configuration Not Saving</h4>
+                        <p class="text-yellow-800 text-sm">
+                            Make sure you're logged into your Lexis Tools account and have the necessary permissions. Try refreshing the page and attempting again.
+                        </p>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-serif font-bold text-slate-900 mt-12 mb-6">Quick Access Links</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <a href="https://aistudio.google.com" target="_blank" class="block p-6 bg-white border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg class="w-6 h-6 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            <h4 class="font-bold text-slate-900">Google AI Studio</h4>
+                        </div>
+                        <p class="text-slate-600 text-sm">Get your Google Gemini API key</p>
+                    </a>
+
+                    <a href="/dashboard/#settings" class="block p-6 bg-white border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg class="w-6 h-6 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <h4 class="font-bold text-slate-900">Lexis Tools Settings</h4>
+                        </div>
+                        <p class="text-slate-600 text-sm">Configure your API key in dashboard</p>
+                    </a>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 p-8 rounded-2xl my-12 text-center">
+                    <svg class="w-12 h-12 text-green-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-green-900 mb-2">Congratulations!</h3>
+                    <p class="text-green-800">
+                        You've successfully configured Google Gemini API in your Lexis Tools dashboard. You can now enjoy enhanced translation and voice synthesis capabilities.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </article>
+</main>
+{% endblock %}

@@ -1,0 +1,170 @@
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s cubic-bezier(0.5, 0, 0, 1) forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.recording {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        background-color: rgb(239 68 68);
+    }
+
+    50% {
+        background-color: rgb(220 38 38);
+    }
+}
+
+.lang-dropdown {
+    position: relative;
+}
+
+.lang-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.5rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    max-height: 400px;
+    overflow: hidden;
+    z-index: 50;
+    min-width: 280px;
+    display: none;
+}
+
+.lang-dropdown-menu.active {
+    display: block;
+}
+
+.lang-search {
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    z-index: 10;
+}
+
+.lang-list {
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.lang-item {
+    padding: 0.625rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.lang-item:hover {
+    background-color: #f8fafc;
+}
+
+.lang-item.selected {
+    background-color: #f1f5f9;
+    font-weight: 500;
+}
+
+.prompt-dropdown {
+    position: relative;
+}
+
+.prompt-menu {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 0.5rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 50;
+    min-width: 200px;
+    display: none;
+}
+
+.prompt-menu.active {
+    display: block;
+}
+
+.prompt-item {
+    padding: 0.625rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.prompt-item:hover {
+    background-color: #f8fafc;
+}
+
+.prompt-item:last-child {
+    border-bottom: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.2s;
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1rem;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
