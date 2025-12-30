@@ -854,7 +854,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const contentType = response.headers.get('content-type');
                 const responseData = contentType?.includes('application/json') ? await response.json() : await response.blob();
-                
+
                 handleTTSSuccess(responseData, text, button);
             } catch (error) {
                 handleTTSError(error, button);
@@ -870,7 +870,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 '&#x27;': "'",
                 '&#x2F;': '/'
             };
-            
+
             try {
                 const decoded = errorText.replace(/&[#\w]+;/g, entity => htmlEntityMap[entity] || entity);
                 const errorData = JSON.parse(decoded);
@@ -881,19 +881,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     /["']message["']\s*:\s*["']([^"']+)["']/i,
                     /error["']?\s*:\s*["']([^"']+)["']/i
                 ];
-                
+
                 for (const pattern of patterns) {
                     const match = errorText.match(pattern);
                     if (match) return match[1];
                 }
-                
+
                 return `HTTP ${status}: ${statusText}`;
             }
         };
 
         const handleTTSSuccess = (data, text, button) => {
             button.disabled = false;
-            
+
             if (data instanceof Blob) {
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -912,7 +912,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const handleTTSError = (error, button) => {
             console.error('TTS Error:', error);
             alert(error.message || 'An error occurred while converting text to speech.');
-            
+
             button.disabled = false;
             const originalIcon = button.id === 'listenSourceBtn' ? listenSourceBtnOriginalIcon : listenTargetBtnOriginalIcon;
             button.innerHTML = originalIcon;
@@ -950,7 +950,125 @@ document.addEventListener('DOMContentLoaded', function () {
         playCustomTTS(text, listenTargetBtn);
     });
 
-    // Speech-to-text (voice input)
+    // --- Speech-to-Text (Voice Input) ---
+    // Helper to merge strings without duplicating overlapping prefixes/suffixes
+    function smartMerge(base, addition) {
+        if (!base) return addition;
+        if (!addition) return base;
+
+        const b = base.trim();
+        const a = addition.trim();
+
+        // 1. Check if addition is a cumulative update of base
+        if (a.toLowerCase().startsWith(b.toLowerCase())) {
+            return addition;
+        }
+
+        // 2. Search for the longest overlap between end of base and start of addition
+        let overlap = 0;
+        const maxCheck = Math.min(b.length, a.length);
+        for (let len = maxCheck; len > 0; len--) {
+            if (b.slice(-len).toLowerCase() === a.slice(0, len).toLowerCase()) {
+                overlap = len;
+                break;
+            }
+        }
+
+        // 3. Return merged with a single space if no overlap, or sliced overlap
+        if (overlap > 0) {
+            return base.trimEnd() + addition.trimStart().slice(overlap);
+        } else {
+            return base.trimEnd() + ' ' + addition.trimStart();
+        }
+    }
+
+    let initialValue = '';
+    let lastProcessedResultIndex = 0; // Track which result indices we've already processed
+
+    // Define event handlers once, outside the click handler
+    function handleRecognitionStart() {
+        isRecording = true;
+        sourceText.value = ''; // Clear the textarea when starting voice input
+        initialValue = '';
+        lastProcessedResultIndex = 0; // Reset for new session
+        micSourceBtn.innerHTML = '';
+        micSourceBtn.appendChild(stopIconTemplate.cloneNode(true));
+        micSourceBtn.classList.add('is-recording', 'bg-red-500', 'text-white');
+        micSourceBtn.title = 'Stop Recording';
+    }
+
+    function handleRecognitionResult(event) {
+        clearTimeout(silenceTimer);
+
+        let interimTranscript = '';
+        let newFinals = [];
+
+        // Process only NEW results (those after lastProcessedResultIndex)
+        for (let i = lastProcessedResultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+                newFinals.push(transcript.trim());
+                lastProcessedResultIndex = i + 1; // Mark this result as processed
+            } else {
+                // Interim results - merge them carefully
+                interimTranscript = smartMerge(interimTranscript, transcript);
+            }
+        }
+
+        // Build the complete final text from all processed finals
+        let allFinals = [];
+        for (let i = 0; i < lastProcessedResultIndex; i++) {
+            if (event.results[i] && event.results[i].isFinal) {
+                allFinals.push(event.results[i][0].transcript.trim());
+            }
+        }
+
+        // Deduplicate finals (for cumulative browser modes)
+        let cleanFinals = [];
+        for (let i = 0; i < allFinals.length; i++) {
+            let isRedundant = false;
+            for (let j = i + 1; j < allFinals.length; j++) {
+                if (allFinals[j].toLowerCase().includes(allFinals[i].toLowerCase())) {
+                    isRedundant = true;
+                    break;
+                }
+            }
+            if (!isRedundant) {
+                cleanFinals.push(allFinals[i]);
+            }
+        }
+
+        // Assemble current session text
+        let sessionText = cleanFinals.join(' ');
+        sessionText = smartMerge(sessionText, interimTranscript);
+
+        // Update the textarea
+        sourceText.value = initialValue.trimEnd() + (sessionText ? (initialValue ? ' ' : '') + sessionText : '');
+
+        silenceTimer = setTimeout(() => {
+            if (isRecording) {
+                recognition.stop();
+            }
+        }, 10000);
+    }
+
+    function handleRecognitionError(event) {
+        clearTimeout(silenceTimer);
+        console.error('Speech recognition error:', event.error);
+        if (event.error !== 'no-speech' && event.error !== 'aborted') {
+            alert('Speech recognition error: ' + event.error);
+        }
+    }
+
+    function handleRecognitionEnd() {
+        clearTimeout(silenceTimer);
+        isRecording = false;
+        lastProcessedResultIndex = 0; // Reset for next session
+        micSourceBtn.innerHTML = micSourceBtnOriginalIcon;
+        micSourceBtn.classList.remove('is-recording', 'bg-red-500', 'text-white');
+        micSourceBtn.title = 'Voice Input';
+    }
+
     micSourceBtn.addEventListener('click', function () {
         if (!recognition) {
             alert('Speech recognition is not supported in your browser. Please use Chrome or Edge.');
@@ -961,56 +1079,37 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        // Set recognition parameters
         recognition.lang = selectedSourceLang;
 
-        recognition.onstart = function () {
-            isRecording = true;
-            micSourceBtn.innerHTML = '';
-            micSourceBtn.appendChild(stopIconTemplate.cloneNode(true));
-            micSourceBtn.classList.add('is-recording', 'bg-red-500', 'text-white');
-            micSourceBtn.title = 'Stop Recording';
-        };
+        // Remove any existing event listeners to prevent duplicates
+        recognition.onstart = null;
+        recognition.onresult = null;
+        recognition.onerror = null;
+        recognition.onend = null;
 
-        recognition.onresult = function (event) {
-            clearTimeout(silenceTimer);
+        // Attach fresh event listeners
+        recognition.onstart = handleRecognitionStart;
+        recognition.onresult = handleRecognitionResult;
+        recognition.onerror = handleRecognitionError;
+        recognition.onend = handleRecognitionEnd;
 
-            let interimTranscript = '';
-            let finalTranscript = '';
-
-            for (let i = 0; i < event.results.length; i++) {
-                const transcript = event.results[i][0].transcript;
-                if (event.results[i].isFinal) {
-                    finalTranscript += transcript + ' ';
-                } else {
-                    interimTranscript += transcript;
-                }
+        // Start recognition
+        try {
+            recognition.start();
+        } catch (error) {
+            console.error('Failed to start recognition:', error);
+            if (error.message.includes('already started')) {
+                // Force stop and retry
+                recognition.stop();
+                setTimeout(() => {
+                    try {
+                        recognition.start();
+                    } catch (retryError) {
+                        console.error('Retry failed:', retryError);
+                    }
+                }, 100);
             }
-
-            sourceText.value = (finalTranscript + interimTranscript).trim();
-
-            silenceTimer = setTimeout(() => {
-                if (isRecording) {
-                    recognition.stop();
-                }
-            }, 15000);
-        };
-
-        recognition.onerror = function (event) {
-            clearTimeout(silenceTimer);
-            console.error('Speech recognition error:', event.error);
-            if (event.error !== 'no-speech' && event.error !== 'aborted') {
-                alert('Speech recognition error: ' + event.error);
-            }
-        };
-
-        recognition.onend = function () {
-            clearTimeout(silenceTimer);
-            isRecording = false;
-            micSourceBtn.innerHTML = micSourceBtnOriginalIcon;
-            micSourceBtn.classList.remove('is-recording', 'bg-red-500', 'text-white');
-            micSourceBtn.title = 'Voice Input';
-        };
-
-        recognition.start();
+        }
     });
 });
