@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import json
 
-with open("/home/lexistools/Lexis_Tools/blogs.json") as file:
+with open("blogs.json") as file:
     blogs = json.load(file)
 
 def blog_page(request):

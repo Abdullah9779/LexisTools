@@ -14,7 +14,7 @@ serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
 
 # Create your views here.
 
-with open("/home/lexistools/Lexis_Tools/blogs.json") as file:
+with open("blogs.json") as file:
     blogs = json.load(file)
 
 def landing_page(request):
