@@ -782,143 +782,55 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    let currentAudio = null;
     let speakingButton = null;
 
-    function playAudioData(audioBase64, mime, button) {
-        currentAudio = new Audio(`data:${mime};base64,${audioBase64}`);
-
-        currentAudio.onplay = function () {
-            speakingButton = button;
-            button.innerHTML = '';
-            button.appendChild(stopIconTemplate.cloneNode(true));
-            button.classList.add('is-speaking', 'bg-blue-500', 'text-white');
-        };
-
-        currentAudio.onpause = currentAudio.onended = function () {
-            resetSpeakingButton();
-            currentAudio = null;
-        };
-
-        currentAudio.play().catch(err => {
-            console.error('Audio playback failed:', err);
-            alert('Failed to play audio. Please try again.');
-            resetSpeakingButton();
-        });
-    }
+    // Initialize TTS Handler
+    const ttsHandler = new TTSHandler();
 
     // Google Translate TTS function
     function playCustomTTS(text, button) {
-        if (currentAudio && currentAudio.duration > 0 && !currentAudio.paused) {
-            currentAudio.pause();
+        if (ttsHandler.isPlaying) {
+            ttsHandler.stop();
             resetSpeakingButton();
+            // If the same button was clicked to stop, strictly stop.
+            // But if we want to toggle, we might check if it was THE SAME button.
+            // Current logic implies 'stop if playing'.
             return;
         }
+
         if (!text || !text.trim()) {
             alert('No text to read.');
             return;
         }
 
-        // Check Cache
-        const cachedData = CacheManager.getAudio(text);
-        if (cachedData) {
-            playAudioData(cachedData.audio, cachedData.mime, button);
-            return;
-        }
-
         const loaderIconTemplate = document.getElementById('loader-icon').content;
+        const originalIcon = button.innerHTML;
+
+        // Show loader
         button.innerHTML = '';
         button.appendChild(loaderIconTemplate.cloneNode(true));
         button.disabled = true;
 
-        const data = {
-            text: text,
-        };
-
-        const handleTTSRequest = async () => {
-            try {
-                const response = await fetch('/api/ai-models/tts/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken,
-                    },
-                    body: JSON.stringify(data),
-                });
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    const errorMessage = extractErrorMessage(errorText, response.status, response.statusText);
-                    throw new Error(errorMessage);
-                }
-
-                const contentType = response.headers.get('content-type');
-                const responseData = contentType?.includes('application/json') ? await response.json() : await response.blob();
-
-                handleTTSSuccess(responseData, text, button);
-            } catch (error) {
-                handleTTSError(error, button);
+        ttsHandler.speak(text, {
+            onStart: () => {
+                button.disabled = false;
+                button.innerHTML = '';
+                button.appendChild(stopIconTemplate.cloneNode(true));
+                button.classList.add('is-speaking', 'bg-blue-500', 'text-white');
+                speakingButton = button;
+            },
+            onEnd: () => {
+                button.disabled = false;
+                resetSpeakingButton();
+                // Ensure specific button icon is restored if resetSpeakingButton didn't catch it logic (it relies on global var)
+            },
+            onError: (msg) => {
+                console.error(msg);
+                alert(msg);
+                button.disabled = false;
+                resetSpeakingButton();
             }
-        };
-
-        const extractErrorMessage = (errorText, status, statusText) => {
-            const htmlEntityMap = {
-                '&quot;': '"',
-                '&amp;': '&',
-                '&lt;': '<',
-                '&gt;': '>',
-                '&#x27;': "'",
-                '&#x2F;': '/'
-            };
-
-            try {
-                const decoded = errorText.replace(/&[#\w]+;/g, entity => htmlEntityMap[entity] || entity);
-                const errorData = JSON.parse(decoded);
-                return errorData.error || errorData.message || errorData.detail || decoded;
-            } catch {
-                const patterns = [
-                    /["']error["']\s*:\s*["']([^"']+)["']/i,
-                    /["']message["']\s*:\s*["']([^"']+)["']/i,
-                    /error["']?\s*:\s*["']([^"']+)["']/i
-                ];
-
-                for (const pattern of patterns) {
-                    const match = errorText.match(pattern);
-                    if (match) return match[1];
-                }
-
-                return `HTTP ${status}: ${statusText}`;
-            }
-        };
-
-        const handleTTSSuccess = (data, text, button) => {
-            button.disabled = false;
-
-            if (data instanceof Blob) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const base64 = reader.result.split(',')[1];
-                    playAudioData(base64, 'audio/mpeg', button);
-                };
-                reader.readAsDataURL(data);
-            } else if (data?.audio) {
-                CacheManager.saveAudio(text, { audio: data.audio, mime: data.mime });
-                playAudioData(data.audio, data.mime, button);
-            } else {
-                throw new Error(data?.error || 'Invalid response format');
-            }
-        };
-
-        const handleTTSError = (error, button) => {
-            console.error('TTS Error:', error);
-            alert(error.message || 'An error occurred while converting text to speech.');
-
-            button.disabled = false;
-            const originalIcon = button.id === 'listenSourceBtn' ? listenSourceBtnOriginalIcon : listenTargetBtnOriginalIcon;
-            button.innerHTML = originalIcon;
-        };
-
-        handleTTSRequest();
+        });
     }
 
     function resetSpeakingButton() {
