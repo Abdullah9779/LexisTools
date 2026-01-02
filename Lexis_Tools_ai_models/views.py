@@ -24,59 +24,6 @@ from .utils import is_llm_api_key_valid, is_tts_api_key_valid
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 @renderer_classes([JSONRenderer])
-def text_to_speech_ai_model_api(request):
-    if request.method == "POST":
-        data = request.data
-        required_fields = ["text"]
-        for field in required_fields:
-            if field not in data or not data.get(field):
-                return Response(
-                    {"error": f"Missing required field: {field}"},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-        
-        user = request.user
-        try:
-            user_tts_config = UserTTSConfig.objects.get(user=user)
-            provider = user_tts_config.provider
-            model = user_tts_config.model
-            voice_name = user_tts_config.voice_name
-            api_key = user_tts_config.api_key
-        except UserTTSConfig.DoesNotExist:
-            return Response(
-                {"error": "User TTS configuration not found."},
-                status=status.HTTP_404_NOT_FOUND
-            )
-
-        try:
-            tts = TTSEngine(
-                provider=provider,
-                api_key=api_key,
-            )
-            pcm_bytes = tts.text_to_speech(
-                text=data.get("text"),
-                model=model,
-                voice=voice_name,
-                output_format="mp3_44100_128",
-                stream=True,
-            )
-            if provider == "GOOGLE":
-                audio_base64 = pcm_to_wav_base64(pcm_bytes)
-                return Response({
-                    "audio": audio_base64,
-                    "mime": "audio/wav"
-                }, status=status.HTTP_200_OK)
-                
-            elif provider == "ELEVENLABS":
-                return StreamingHttpResponse(pcm_bytes, content_type="audio/mpeg", status=status.HTTP_200_OK)
-        
-        except Exception as e:
-            return Response({"error": f"Unexpected error: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-@renderer_classes([JSONRenderer])
 def translation_ai_model_api(request):
     if request.method == "POST":
         data = request.data
@@ -117,11 +64,9 @@ def translation_ai_model_api(request):
             return response
         
         except LLMProviderError as e:
-            print(e)
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
         except Exception as e:
-            print(e)
             return Response({"error": f"Unexpected error: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 @api_view(["POST"])
@@ -176,7 +121,6 @@ def text_formatter_ai_model_api(request):
 def text_summarizer_ai_model_api(request):
     if request.method == "POST":
         data = request.data
-        print(data)
         required_fields = ["text", "length"]
         for field in required_fields:
             if field not in data or not data.get(field):
@@ -207,7 +151,6 @@ def text_summarizer_ai_model_api(request):
                 text=data.get("text"),
                 summary_length=data.get("length"),
             )
-            print(summarized_text)
             return Response(summarized_text, status=status.HTTP_200_OK)
 
         except LLMProviderError as e:

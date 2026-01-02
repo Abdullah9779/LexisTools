@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('tts/', views.text_to_speech_ai_model_api, name='text_to_speech_ai_model_api'),
     path('translate/', views.translation_ai_model_api, name='translation_ai_model_api'),
     path('text-formatter/', views.text_formatter_ai_model_api, name='text_formatter_ai_model_api'),
     path('text-summarizer/', views.text_summarizer_ai_model_api, name='text_summarizer_ai_model_api'),
