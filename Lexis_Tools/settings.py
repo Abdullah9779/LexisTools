@@ -37,7 +37,7 @@ ALLOWED_HOSTS = ['lexistools.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # SESSION SETTINGS
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 365 * 2    # 2 year
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 60    # 60 year
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = True      # Refresh expiry on each request
 SESSION_COOKIE_SECURE = False           # Only over HTTPS
