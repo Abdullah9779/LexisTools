@@ -35,6 +35,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['lexistools.pythonanywhere.com', '127.0.0.1', 'localhost']
 
+FERNET_KEYS = [os.getenv("FERNET_PRIVATE_KEY")]
 
 # SESSION SETTINGS
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 60    # 60 year

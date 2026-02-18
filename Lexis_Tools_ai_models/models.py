@@ -2,12 +2,13 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.conf import settings
+from fernet_fields import EncryptedCharField
 
 class UserLLMConfig(models.Model):          
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_config')
     provider = models.CharField(max_length=10, choices=settings.LLM_PROVIDER_CHOICES, default='GOOGLE')
     model = models.CharField(max_length=100)
-    api_key = models.CharField(max_length=100, null=True, blank=True)
+    api_key = EncryptedCharField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -33,7 +34,7 @@ class UserTTSConfig(models.Model):
     provider = models.CharField(max_length=10, choices=settings.TTS_PROVIDER_CHOICES, default='GOOGLE')
     model = models.CharField(max_length=100)
     voice_name = models.CharField(max_length=100)
-    api_key = models.CharField(max_length=100, null=True, blank=True)
+    api_key = EncryptedCharField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
