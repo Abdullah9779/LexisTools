@@ -1,10 +1,18 @@
 from django.contrib import admin
 from .models import UserLLMConfig, UserTTSConfig, UserTextFormatterPrompt
+from unfold.admin import ModelAdmin
+
+from import_export.admin import ImportExportModelAdmin
+from unfold.contrib.import_export.forms import ImportForm, ExportForm, SelectableFieldsExportForm
 
 # Register your models here.
 
 @admin.register(UserLLMConfig)
-class UserLLMConfigAdmin(admin.ModelAdmin):
+class UserLLMConfigAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+    export_form_class = SelectableFieldsExportForm
+
     list_display = ('user', 'provider', 'short_model', 'short_api_key')
     list_filter = ('provider', 'model', 'created_at', 'updated_at')
     search_fields = ('user__username', 'user__email')
@@ -27,7 +35,11 @@ class UserLLMConfigAdmin(admin.ModelAdmin):
 
 
 @admin.register(UserTTSConfig)
-class UserTTSConfigAdmin(admin.ModelAdmin):
+class UserTTSConfigAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+    export_form_class = SelectableFieldsExportForm
+
     list_display = ('user', 'provider', 'short_model', 'voice_name', 'short_api_key')
     list_filter = ('provider', 'model')
     search_fields = ('user__username', 'user__email')
@@ -46,7 +58,11 @@ class UserTTSConfigAdmin(admin.ModelAdmin):
         return ""
 
 @admin.register(UserTextFormatterPrompt)
-class UserTextFormatterPromptAdmin(admin.ModelAdmin):
+class UserTextFormatterPromptAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+    export_form_class = SelectableFieldsExportForm
+    
     list_display = ('user', 'short_prompt_name', 'short_prompt_content')
     list_filter = ('user__username', 'user__email', 'created_at', 'updated_at')
     search_fields = ('user__username', 'user__email', 'prompt_name')

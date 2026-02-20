@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 Lexis_Tools_venv/
+migrations/
+db.sqlite3

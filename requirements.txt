@@ -1,5 +1,8 @@
 django
 djangorestframework
+django-unfold
+django-fernet-fields
+import_export
 langchain
 langchain-google-genai
 langchain-openai

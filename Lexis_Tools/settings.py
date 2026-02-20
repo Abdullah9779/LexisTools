@@ -45,10 +45,20 @@ SESSION_COOKIE_SECURE = False           # Only over HTTPS
 SESSION_COOKIE_HTTPONLY = True         # JS cannot access
 SESSION_COOKIE_SAMESITE = 'Lax'        # Protect against CSRF
 
+# UNFOLD SETTINGS
+UNFOLD = {
+    "SITE_TITLE": "Lexis Tools Admin Portal",
+    "SITE_HEADER": "Lexis Tools Admin",
+    "SITE_SUBHEADER": "Welcome to Lexis Tools Admin Portal",
+    "SITE_URL": "/",
+}
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
+    'unfold.contrib.import_export',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -57,6 +67,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     'rest_framework',
+    'import_export',
 
     'Lexis_Tools_ai_models',
     'Lexis_Tools_apis',
